@@ -1,4 +1,4 @@
-package com.pidzama.shoppinlisttest.ui.theme
+package com.pidzama.shoppinlisttest.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
