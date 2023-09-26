@@ -1,4 +1,4 @@
-package com.pidzama.shoppinlisttest.presentation.screens
+package com.pidzama.shoppinlisttest.presentation.screens.home
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
