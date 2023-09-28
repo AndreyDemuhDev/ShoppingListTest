@@ -9,9 +9,8 @@ interface ApiService {
     @POST("CreateTestKey?")
     suspend fun createTestKey(): Response<String>
 
-    @POST("Authentication?key=ADC4J5")
-    @FormUrlEncoded
-    suspend fun postAuthentication(@Field("key") key: String): Response<PostAuth>
+    @GET("Authentication?")
+    suspend fun authentication(@Query("key") key: String): Response<PostAuth>
 
     @POST("/CreateShoppingList?key=ADC4J5&name=")
     suspend fun postCreateShoppingList(@Body body: KeyResponse): Response<CreateListResponse>

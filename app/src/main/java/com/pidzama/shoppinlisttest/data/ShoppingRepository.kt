@@ -7,4 +7,6 @@ class ShoppingRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     suspend fun getKey() = apiService.createTestKey()
+
+    suspend fun authentication(key: String) = apiService.authentication(key = key)
 }
