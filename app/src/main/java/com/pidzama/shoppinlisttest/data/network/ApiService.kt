@@ -3,18 +3,16 @@ package com.pidzama.shoppinlisttest.data.network
 import retrofit2.Response
 import retrofit2.http.*
 
-
 interface ApiService {
 
     @POST("CreateTestKey?")
     suspend fun createTestKey(): Response<String>
 
-    @POST("Authentication?key=ADC4J5")
-    @FormUrlEncoded
-    suspend fun postAuthentication(@Field("key") key: String): Response<PostAuth>
+    @GET("Authentication?")
+    suspend fun authentication(@Query("key") key: String): Response<PostAuth>
 
     @POST("/CreateShoppingList?key=ADC4J5&name=")
-    suspend fun postCreateShoppingList(@Body body: KeyResponse): Response<CreateListResponse>
+    suspend fun postCreateShoppingList(@Body body: KeyResponseBody): Response<CreateListResponse>
 
 //    @POST("/RemoveShoppingList?&list_id=290")
 //    suspend fun postDeleteShoppingList(@Body body: KeyResponse): Response<CreateListResponse>
