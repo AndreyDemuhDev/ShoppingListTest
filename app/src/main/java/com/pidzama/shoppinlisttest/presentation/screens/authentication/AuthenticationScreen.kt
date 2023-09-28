@@ -1,5 +1,6 @@
 package com.pidzama.shoppinlisttest.presentation.screens.authentication
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -25,8 +26,9 @@ import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 @Composable
 fun AuthenticationScreen(navController: NavHostController) {
 
+    val context = LocalContext.current
     val viewModel = hiltViewModel<AuthViewModel>()
-    val getKey = viewModel.getKey.value
+    val successKey = viewModel.key.value
     val authentication = remember { mutableStateOf("") }
     val key = remember { mutableStateOf("______") }
     viewModel.getAuthenticationKey()
@@ -48,7 +50,7 @@ fun AuthenticationScreen(navController: NavHostController) {
                     color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
                 ),
                 onClick = {
-                    key.value = getKey.toString()
+                    key.value = viewModel.getKey.value.toString()
                 }) {
                 Text(
                     textAlign = TextAlign.Center,
@@ -70,9 +72,16 @@ fun AuthenticationScreen(navController: NavHostController) {
                 )
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Button(enabled = authentication.value.length == 6,
+            Button(enabled = authentication.value.length >= 6,
                 onClick = {
-                    navController.navigate(Screens.Home.route)
+                    viewModel.authentication(key.value)
+                    if(key.value == authentication.value){
+                        navController.navigate(Screens.Home.route)
+                        Toast.makeText(context, "$successKey", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "$successKey", Toast.LENGTH_SHORT).show()
+                    }
+
                 }) {
                 Text(
                     text = "Авторизоваться",

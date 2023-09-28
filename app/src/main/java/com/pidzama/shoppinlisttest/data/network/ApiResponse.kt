@@ -1,6 +1,6 @@
 package com.pidzama.shoppinlisttest.data.network
 
-data class KeyResponse(
+data class KeyResponseBody(
     val key: Int? = null,
 )
 
