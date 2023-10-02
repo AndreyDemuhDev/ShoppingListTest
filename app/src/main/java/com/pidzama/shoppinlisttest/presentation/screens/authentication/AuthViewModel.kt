@@ -1,11 +1,12 @@
 package com.pidzama.shoppinlisttest.presentation.screens.authentication
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pidzama.shoppinlisttest.data.ShoppingRepository
-import com.pidzama.shoppinlisttest.data.network.PostAuth
+import com.pidzama.shoppinlisttest.data.network.AuthResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,11 +20,13 @@ class AuthViewModel @Inject constructor(
     val getKey: LiveData<String>
         get() = _getKey
 
-    private val _key = MutableLiveData<PostAuth>()
-    val key: LiveData<PostAuth>
+    private val _key = MutableLiveData<AuthResponse>()
+    val key: LiveData<AuthResponse>
         get() = _key
 
+
     fun getAuthenticationKey() {
+        Log.d("MyLog", "Отрабатывает запрос на получение ключа")
         viewModelScope.launch {
             shoppingRepository.getKey().let {
                 if (it.isSuccessful) {
@@ -36,6 +39,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun authentication(key: String) {
+        Log.d("MyLog", "отрабатывает функция авторизация")
         viewModelScope.launch {
             shoppingRepository.authentication(key).let {
                 if (it.isSuccessful) {
@@ -46,4 +50,6 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
+
 }
