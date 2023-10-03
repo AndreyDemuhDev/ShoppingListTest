@@ -12,4 +12,6 @@ class ShoppingRepository @Inject constructor(
     suspend fun authentication(key: String) = apiService.authentication(key = key)
 
     suspend fun createNewShoppingList(key: String, name: String) = apiService.createShoppingList(key = key, name = name)
+
+    suspend fun getAllMyShopLists(key: String) = apiService.getAllMyShopLists(key = key)
 }

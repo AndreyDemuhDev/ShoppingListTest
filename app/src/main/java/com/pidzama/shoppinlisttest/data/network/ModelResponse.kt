@@ -25,7 +25,6 @@ data class ShoppingListResponse(
 )
 
 
-
 data class ShoppingListsItem(
     @SerializedName("shop_list")
     val lists: ArrayList<ListItem> = arrayListOf(),
