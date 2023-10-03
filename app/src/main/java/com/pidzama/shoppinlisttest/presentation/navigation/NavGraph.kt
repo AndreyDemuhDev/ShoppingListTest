@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.pidzama.shoppinlisttest.presentation.screens.authentication.AuthenticationScreen
+import com.pidzama.shoppinlisttest.presentation.screens.detail.DetailsScreen
 import com.pidzama.shoppinlisttest.presentation.screens.home.HomeScreen
 import com.pidzama.shoppinlisttest.presentation.screens.splash.SplashScreen
 
@@ -25,6 +26,12 @@ fun AppNavGraph(
         }
         composable(route = Screens.Home.route) {
             HomeScreen()
+        }
+        composable(route = Screens.Details.route + "/{id}") { navBackStackEntry ->
+            DetailsScreen(
+                id = navBackStackEntry.arguments?.getInt("id")?: 1,
+                navController = navController
+            )
         }
     }
 

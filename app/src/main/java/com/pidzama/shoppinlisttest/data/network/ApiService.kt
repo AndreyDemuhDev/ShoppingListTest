@@ -1,6 +1,5 @@
 package com.pidzama.shoppinlisttest.data.network
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -20,6 +19,9 @@ interface ApiService {
         @Query("key") key: String,
         @Query("name") name: String
     ): Response<ShoppingListResponse>
+
+    @GET("GetShoppingList?list_id={id}") //получить конкретный список
+    suspend fun getShoppingList(@Path("id") id: Int): Response<Elements>
 
 
 //    @POST("/RemoveShoppingList?&list_id=290")

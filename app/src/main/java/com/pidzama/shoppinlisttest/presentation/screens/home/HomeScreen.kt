@@ -1,6 +1,7 @@
 package com.pidzama.shoppinlisttest.presentation.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
@@ -34,7 +35,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     val allShoppingLists = viewModel.getAllShoppingLists.observeAsState(listOf()).value
     val dialogState = remember { mutableStateOf(false) }
     viewModel.getAllShoppingLists(getKey.value)
-
+    viewModel.getAllShoppingLists.observeAsState(listOf()).value
     if (dialogState.value) {
         DialogAddNameList(dialogState, onSaveNameList = {
             viewModel.createNewShoppingList(key = getKey.value, name = it)
@@ -44,13 +45,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(all = 10.dp),
     ) {
         Scaffold(floatingActionButton = {
             ButtonAddNewList { dialogState.value = true }
         }) {
             Column(
-                modifier = Modifier.padding(start = 2.dp),
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 14.dp),
             ) {
                 Text(
                     text = "Списки пользователя ${getKey.value}",
@@ -58,7 +58,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     fontSize = 24.sp,
                     fontStyle = FontStyle.Italic
                 )
-                LazyColumn(modifier = Modifier.background(color = Color.Black)) {
+                LazyColumn {
                     items(allShoppingLists) { item ->
                         CardItemList(list = item, navController = navController)
                     }
