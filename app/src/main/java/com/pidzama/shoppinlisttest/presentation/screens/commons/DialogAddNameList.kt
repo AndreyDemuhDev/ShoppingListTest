@@ -38,9 +38,11 @@ fun DialogAddNameList(dialogState: MutableState<Boolean>, onSaveNameList: (Strin
         title = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Введите имя списка:")
-                TextField(value = nameList.value, onValueChange = {
-                    nameList.value = it
-                })
+                TextField(
+                    value = nameList.value,
+                    onValueChange = {
+                        nameList.value = it
+                    })
             }
         }
     )

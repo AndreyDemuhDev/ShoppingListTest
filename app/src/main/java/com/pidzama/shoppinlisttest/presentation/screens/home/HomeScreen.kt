@@ -26,16 +26,18 @@ import com.pidzama.shoppinlisttest.presentation.ui.theme.ShoppinListTestTheme
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
     val context = LocalContext.current
-    val viewModel = hiltViewModel<AuthViewModel>()
+    val viewModel = hiltViewModel<HomeViewModel>()
     val dataStoreRepository = DataStoreRepository(context)
     val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
     val dialogState = remember { mutableStateOf(false) }
+    val nameList = remember {
+        mutableStateOf("name1")
+    }
     if (dialogState.value) {
         DialogAddNameList(dialogState, onSaveNameList = {
-
+            viewModel.createNewShoppingList(key = getKey.value, name = it)
         })
     }
-
 
     Surface(
         modifier = Modifier
@@ -54,11 +56,11 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     fontSize = 24.sp,
                     fontStyle = FontStyle.Italic
                 )
-                LazyColumn(modifier = Modifier.background(color = Color.Black)) {
+//                LazyColumn(modifier = Modifier.background(color = Color.Black)) {
 //                    items(allShoppingLists) { item ->
 //                        CardItemList(list = item, navController = navController)
 //                    }
-                }
+//                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.pidzama.shoppinlisttest.data.network
 
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -13,6 +14,16 @@ interface ApiService {
 
     @GET("GetAllMyShopLists?") // получить перечень списков
     suspend fun getAllMyShopLists(@Query("key") key: String): Response<ShoppingListsItem>
+
+//    @POST("CreateShoppingList?") //создать список покупок
+//    suspend fun createShoppingList(@Body createList:ShoppingListRequest): Response<ShoppingListResponse>
+
+
+    @POST("CreateShoppingList") //создать список покупок
+    suspend fun createShoppingList(
+        @Query("key") key: String,
+        @Query("name") name: String
+    ): Response<ShoppingListResponse>
 
 
 //    @POST("/RemoveShoppingList?&list_id=290")
