@@ -24,15 +24,36 @@ data class ShoppingListResponse(
     var id: Int
 )
 
-
+//перечень всех списков покупок по конкретному ключу
 data class ShoppingListsItem(
     @SerializedName("shop_list")
-    val lists: ArrayList<ListItem> = arrayListOf(),
+    val lists: ArrayList<CurrentList> = arrayListOf(),
     val success: Boolean? = null
 )
 
-data class ListItem(
+//информация по одному списку
+data class CurrentList(
+    @SerializedName("created")
     val created: String? = null,
+    @SerializedName("name")
     val name: String? = null,
+    @SerializedName("id")
+    val id: Int? = null,
+)
+
+//перечень конкретного списка
+data class ShoppingList(
+    val success: Boolean? = null,
+    @SerializedName("item_list")
+    val lists: ArrayList<Elements> = arrayListOf()
+)
+
+//элементы списка покупок
+data class Elements(
+    @SerializedName("created")
+    val created: String? = null,
+    @SerializedName("name")
+    val name: String? = null,
+    @SerializedName("id")
     val id: Int? = null,
 )
