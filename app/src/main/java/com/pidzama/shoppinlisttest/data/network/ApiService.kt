@@ -12,12 +12,8 @@ interface ApiService {
     @POST("Authentication?") //авторизоваться по полученному ключу
     suspend fun authentication(@Query("key") key: String): Response<AuthResponse>
 
-    @GET("GetAllMyShopLists?") // получить перечень списков
+    @GET("GetAllMyShopLists?") // получить перечень списков покупок
     suspend fun getAllMyShopLists(@Query("key") key: String): Response<ShoppingListsItem>
-
-//    @POST("CreateShoppingList?") //создать список покупок
-//    suspend fun createShoppingList(@Body createList:ShoppingListRequest): Response<ShoppingListResponse>
-
 
     @POST("CreateShoppingList") //создать список покупок
     suspend fun createShoppingList(

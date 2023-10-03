@@ -17,33 +17,32 @@ class HomeViewModel @Inject constructor(
     private val shoppingRepository: ShoppingRepository
 ) : ViewModel() {
 
-//    private val _getAllShoppingLists = MutableLiveData<List<ListItem>>()
-//    val getAllShoppingLists: MutableLiveData<List<ListItem>>
-//        get() = _getAllShoppingLists
-//
-//    fun getAllShoppingLists(key: String) {
-//        viewModelScope.launch {
-//            shoppingRepository.getAllMyShopLists(key).let {
-//                if (it.isSuccessful) {
-//                    _getAllShoppingLists.postValue(it.body()?.lists)
-//                } else {
-//                    it.errorBody()
-//                }
-//            }
-//        }
-//    }
-
     private val _createNewShoppingList = MutableLiveData<ShoppingListResponse>()
     val createNewShoppingList: MutableLiveData<ShoppingListResponse>
         get() = _createNewShoppingList
 
+    private val _getAllShoppingLists = MutableLiveData<List<ListItem>>()
+    val getAllShoppingLists: MutableLiveData<List<ListItem>>
+        get() = _getAllShoppingLists
 
-    fun createNewShoppingList(key: String, name: String){
+    fun getAllShoppingLists(key: String) {
+        viewModelScope.launch {
+            shoppingRepository.getAllMyShopLists(key).let {
+                if (it.isSuccessful) {
+                    _getAllShoppingLists.postValue(it.body()?.lists)
+                } else {
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun createNewShoppingList(key: String, name: String) {
         viewModelScope.launch {
             shoppingRepository.createNewShoppingList(key, name).let {
-                if (it.isSuccessful){
+                if (it.isSuccessful) {
                     _createNewShoppingList.postValue(it.body())
-                } else{
+                } else {
                     it.errorBody()
                 }
             }

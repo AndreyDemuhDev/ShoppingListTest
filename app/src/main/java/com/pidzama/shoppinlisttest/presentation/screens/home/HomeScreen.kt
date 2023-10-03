@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
@@ -17,8 +18,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.pidzama.shoppinlisttest.data.DataStoreRepository
-import com.pidzama.shoppinlisttest.presentation.screens.authentication.AuthViewModel
+import androidx.compose.foundation.lazy.items
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
+import com.pidzama.shoppinlisttest.presentation.screens.commons.CardItemList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNameList
 import com.pidzama.shoppinlisttest.presentation.ui.theme.ShoppinListTestTheme
 
@@ -29,10 +31,10 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val dataStoreRepository = DataStoreRepository(context)
     val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
+    val allShoppingLists = viewModel.getAllShoppingLists.observeAsState(listOf()).value
     val dialogState = remember { mutableStateOf(false) }
-    val nameList = remember {
-        mutableStateOf("name1")
-    }
+    viewModel.getAllShoppingLists(getKey.value)
+
     if (dialogState.value) {
         DialogAddNameList(dialogState, onSaveNameList = {
             viewModel.createNewShoppingList(key = getKey.value, name = it)
@@ -48,7 +50,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             ButtonAddNewList { dialogState.value = true }
         }) {
             Column(
-                modifier = Modifier.padding(start = 10.dp),
+                modifier = Modifier.padding(start = 2.dp),
             ) {
                 Text(
                     text = "Списки пользователя ${getKey.value}",
@@ -56,11 +58,11 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     fontSize = 24.sp,
                     fontStyle = FontStyle.Italic
                 )
-//                LazyColumn(modifier = Modifier.background(color = Color.Black)) {
-//                    items(allShoppingLists) { item ->
-//                        CardItemList(list = item, navController = navController)
-//                    }
-//                }
+                LazyColumn(modifier = Modifier.background(color = Color.Black)) {
+                    items(allShoppingLists) { item ->
+                        CardItemList(list = item, navController = navController)
+                    }
+                }
             }
         }
     }
