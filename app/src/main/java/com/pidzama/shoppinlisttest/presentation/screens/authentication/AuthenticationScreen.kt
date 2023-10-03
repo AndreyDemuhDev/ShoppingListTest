@@ -20,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.pidzama.shoppinlisttest.data.DataStoreManager
+import com.pidzama.shoppinlisttest.data.DataStoreRepository
 import com.pidzama.shoppinlisttest.presentation.navigation.Screens
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,7 +29,8 @@ fun AuthenticationScreen(navController: NavHostController) {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val dataStoreManager = DataStoreManager(context)
+    val dataStoreRepository = DataStoreRepository(context)
+    val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
     val viewModel = hiltViewModel<AuthViewModel>()
     val authentication = remember { mutableStateOf("") }
     val key = remember { mutableStateOf("______") }
@@ -38,15 +38,13 @@ fun AuthenticationScreen(navController: NavHostController) {
 
     val screenKey = viewModel.getKey.value
 
-
-
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.padding(start = 50.dp, end = 50.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Log.d("MyLog", "отображение ключа ${key.value}")
+            Log.d("MyLog", "отображение ключа2 ${key.value}")
             Text(
                 text = key.value,
                 fontSize = 36.sp,
@@ -80,23 +78,33 @@ fun AuthenticationScreen(navController: NavHostController) {
                     imeAction = ImeAction.Done
                 )
             )
-            LaunchedEffect(key1 = true){
-                dataStoreManager.saveAuthKey(authentication.value)
-            }
             Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = getKey.value,
+                color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
+            )
             Button(enabled = authentication.value.length >= 6,
                 onClick = {
                     viewModel.authentication(authentication.value)
                     if (viewModel.key.value?.success == true) {
-                    scope.launch {
-                        dataStoreManager.saveAuthKey(authentication.value)
-                    }
+                        scope.launch {
+                            dataStoreRepository.saveAuthKey(authentication.value)
+                        }
+                        viewModel.authenticationState(completed = true)
 //                        viewModel.getAllShoppingLists(authentication.value)
                         navController.navigate(Screens.Home.route)
-                        Toast.makeText(context, viewModel.key.value?.success.toString(), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            context,
+                            viewModel.key.value?.success.toString(),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     } else {
-                        Toast.makeText(context, viewModel.key.value?.error.toString(), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            context,
+                            viewModel.key.value?.error.toString(),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
 
