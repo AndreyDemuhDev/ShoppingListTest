@@ -1,4 +1,4 @@
-package com.pidzama.shoppinlisttest.presentation.screens
+package com.pidzama.shoppinlisttest.presentation.screens.splash
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

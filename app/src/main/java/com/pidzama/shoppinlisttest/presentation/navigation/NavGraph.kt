@@ -6,13 +6,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.pidzama.shoppinlisttest.presentation.screens.authentication.AuthenticationScreen
 import com.pidzama.shoppinlisttest.presentation.screens.home.HomeScreen
-import com.pidzama.shoppinlisttest.presentation.screens.SplashScreen
+import com.pidzama.shoppinlisttest.presentation.screens.splash.SplashScreen
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
+fun AppNavGraph(
+    startDestination: String,
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Splash.route
+        startDestination = startDestination
     ) {
         composable(route = Screens.Splash.route) {
             SplashScreen(navController = navController)
