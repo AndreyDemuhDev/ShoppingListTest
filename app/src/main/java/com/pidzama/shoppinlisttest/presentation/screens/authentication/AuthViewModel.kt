@@ -1,7 +1,5 @@
 package com.pidzama.shoppinlisttest.presentation.screens.authentication
 
-import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +33,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun getAuthenticationKey() {
-        Log.d("MyLog", "Отрабатывает запрос на получение ключа")
         viewModelScope.launch {
             shoppingRepository.getKey().let {
                 if (it.isSuccessful) {
@@ -48,7 +45,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun authentication(key: String) {
-        Log.d("MyLog", "отрабатывает функция авторизация")
         viewModelScope.launch {
             shoppingRepository.authentication(key).let {
                 if (it.isSuccessful) {

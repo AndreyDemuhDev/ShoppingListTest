@@ -23,10 +23,11 @@ import androidx.compose.foundation.lazy.items
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardItemList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNameList
+import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogDeleteList
 import com.pidzama.shoppinlisttest.presentation.ui.theme.ShoppinListTestTheme
 
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(navController: NavHostController) {
 
     val context = LocalContext.current
     val viewModel = hiltViewModel<HomeViewModel>()
@@ -34,6 +35,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
     val allShoppingLists = viewModel.getAllShoppingLists.observeAsState(listOf()).value
     val dialogState = remember { mutableStateOf(false) }
+    val dialogDeleteState = remember { mutableStateOf(false) }
     viewModel.getAllShoppingLists(getKey.value)
     viewModel.getAllShoppingLists.observeAsState(listOf()).value
     if (dialogState.value) {
@@ -41,6 +43,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             viewModel.createNewShoppingList(key = getKey.value, name = it)
         })
     }
+    if (dialogDeleteState.value){
+        DialogDeleteList(dialogDeleteState, onClickDelete = {
+
+        })
+    }
+
 
     Surface(
         modifier = Modifier
@@ -65,13 +73,5 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    ShoppinListTestTheme {
-        HomeScreen()
     }
 }

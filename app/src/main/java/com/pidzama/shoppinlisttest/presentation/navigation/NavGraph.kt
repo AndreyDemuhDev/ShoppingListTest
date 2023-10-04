@@ -25,11 +25,11 @@ fun AppNavGraph(
             AuthenticationScreen(navController = navController)
         }
         composable(route = Screens.Home.route) {
-            HomeScreen()
+            HomeScreen(navController = navController)
         }
         composable(route = Screens.Details.route + "/{id}") { navBackStackEntry ->
             DetailsScreen(
-                id = navBackStackEntry.arguments?.getInt("id")?: 1,
+                id = navBackStackEntry.arguments?.getString("id")?: "1",
                 navController = navController
             )
         }

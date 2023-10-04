@@ -20,8 +20,11 @@ interface ApiService {
         @Query("name") name: String
     ): Response<ShoppingListResponse>
 
-    @GET("GetShoppingList?list_id={id}") //получить конкретный список
-    suspend fun getShoppingList(@Path("id") id: Int): Response<Elements>
+    @GET("GetShoppingList?") //получить конкретный список
+    suspend fun getShoppingList(@Query("list_id") id: String): Response<Elements>
+
+    @POST("RemoveShoppingList?")
+    suspend fun removeShoppingList(@Query("list_id") id: Int): Response<RemoveList>
 
 
 //    @POST("/RemoveShoppingList?&list_id=290")
