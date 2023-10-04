@@ -64,3 +64,10 @@ data class RemoveList(
     @SerializedName("new_value")
     val delete: Boolean
 )
+
+data class AddElement(
+    @SerializedName("success")
+    val success: Boolean,
+    @SerializedName("item_id")
+    val itemId: Int
+)
