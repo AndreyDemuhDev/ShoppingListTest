@@ -30,7 +30,6 @@ import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 
 @Composable
 fun CardItemList(list: CurrentList, navController: NavHostController) {
-    val context = LocalContext.current
 
     Card(
         modifier = Modifier
@@ -48,11 +47,7 @@ fun CardItemList(list: CurrentList, navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(all = 5.dp)
                     .weight(9f)
-                    .clickable { navController.navigate(Screens.Details.route + "/${list.id}")
-                        Toast
-                            .makeText(context, "${list.id}", Toast.LENGTH_SHORT)
-                            .show()
-                    },
+                    .clickable { navController.navigate(Screens.Details.route + "/${list.id}") },
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
@@ -76,14 +71,14 @@ fun CardItemList(list: CurrentList, navController: NavHostController) {
                     )
                 }
             }
-            Icon(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-                    .clickable {},
-                painter = painterResource(id = R.drawable.ic_delete),
-                contentDescription = "delete icon"
-            )
+//            Icon(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .weight(1f)
+//                    .clickable {  },
+//                painter = painterResource(id = R.drawable.ic_delete),
+//                contentDescription = "delete icon"
+//            )
         }
     }
 }

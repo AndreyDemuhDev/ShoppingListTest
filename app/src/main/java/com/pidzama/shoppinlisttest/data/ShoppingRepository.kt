@@ -18,5 +18,8 @@ class ShoppingRepository @Inject constructor(
 
     suspend fun getShoppingList(id: String) = apiService.getShoppingList(id = id)
 
-    suspend fun removeShoppingList(id: Int) = apiService.removeShoppingList(id = id)
+    suspend fun removeShoppingList(id: String) = apiService.removeShoppingList(id = id)
+
+    suspend fun addItemToShoppingList(id: String, value: String, n: String) =
+        apiService.addItemToShoppingList(id = id, value = value, n = n)
 }

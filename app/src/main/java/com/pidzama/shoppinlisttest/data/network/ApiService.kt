@@ -24,7 +24,14 @@ interface ApiService {
     suspend fun getShoppingList(@Query("list_id") id: String): Response<Elements>
 
     @POST("RemoveShoppingList?")
-    suspend fun removeShoppingList(@Query("list_id") id: Int): Response<RemoveList>
+    suspend fun removeShoppingList(@Query("list_id") id: String): Response<RemoveList>
+
+    @POST("AddToShoppingList?")
+    suspend fun addItemToShoppingList(
+        @Query("id") id: String,
+        @Query("value") value: String,
+        @Query("n") n: String
+    ): Response<AddElement>
 
 
 //    @POST("/RemoveShoppingList?&list_id=290")

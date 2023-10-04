@@ -71,7 +71,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun removeList(id: Int) {
+    fun removeList(id: String) {
         viewModelScope.launch {
             shoppingRepository.removeShoppingList(id).let {
                 if (it.isSuccessful) {
