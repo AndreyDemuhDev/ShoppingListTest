@@ -57,3 +57,10 @@ data class Elements(
     @SerializedName("id")
     val id: Int? = null,
 )
+
+data class RemoveList(
+    @SerializedName("success")
+    val success: Boolean,
+    @SerializedName("new_value")
+    val delete: Boolean
+)

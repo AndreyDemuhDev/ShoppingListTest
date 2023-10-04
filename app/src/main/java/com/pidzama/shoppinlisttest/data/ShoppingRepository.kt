@@ -16,5 +16,7 @@ class ShoppingRepository @Inject constructor(
 
     suspend fun getAllMyShopLists(key: String) = apiService.getAllMyShopLists(key = key)
 
-    suspend fun getShoppingList(id: Int) = apiService.getShoppingList(id)
+    suspend fun getShoppingList(id: String) = apiService.getShoppingList(id = id)
+
+    suspend fun removeShoppingList(id: Int) = apiService.removeShoppingList(id = id)
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pidzama.shoppinlisttest.data.ShoppingRepository
 import com.pidzama.shoppinlisttest.data.network.CurrentList
 import com.pidzama.shoppinlisttest.data.network.Elements
+import com.pidzama.shoppinlisttest.data.network.RemoveList
 import com.pidzama.shoppinlisttest.data.network.ShoppingListResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,6 +29,10 @@ class HomeViewModel @Inject constructor(
     private val _getCurrentShoppingList = MutableLiveData<Elements>()
     val getCurrentShoppingList: LiveData<Elements>
         get() = _getCurrentShoppingList
+
+    private val _removeList = MutableLiveData<RemoveList>()
+    val removeList: LiveData<RemoveList>
+        get() = _removeList
 
 
     fun getAllShoppingLists(key: String) {
@@ -54,11 +59,23 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentShoppingList(id: Int) {
+    fun getCurrentShoppingList(id: String) {
         viewModelScope.launch {
             shoppingRepository.getShoppingList(id).let {
                 if (it.isSuccessful) {
                     _getCurrentShoppingList.postValue(it.body())
+                } else {
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun removeList(id: Int) {
+        viewModelScope.launch {
+            shoppingRepository.removeShoppingList(id).let {
+                if (it.isSuccessful) {
+                    _removeList.postValue(it.body())
                 } else {
                     it.errorBody()
                 }

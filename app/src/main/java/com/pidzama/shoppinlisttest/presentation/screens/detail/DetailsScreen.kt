@@ -9,14 +9,14 @@ import androidx.navigation.NavHostController
 import com.pidzama.shoppinlisttest.presentation.screens.home.HomeViewModel
 
 @Composable
-fun DetailsScreen(id: Int, navController: NavHostController) {
+fun DetailsScreen(id: String, navController: NavHostController) {
 
     val viewModel = hiltViewModel<HomeViewModel>()
     val currentList = viewModel.getCurrentShoppingList.observeAsState().value
     viewModel.getCurrentShoppingList(id)
 
     Column {
-        Text(text = "Экран списка покупок")
+        Text(text = "Экран списка покупок $id")
     }
 
 }

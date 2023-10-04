@@ -10,6 +10,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,9 +48,11 @@ fun CardItemList(list: CurrentList, navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(all = 5.dp)
                     .weight(9f)
-                    .clickable {
-//                        navController.navigate(Screens.Details.route + "/${list.id}")
-                        Toast.makeText(context, "${list.id}", Toast.LENGTH_SHORT).show()},
+                    .clickable { navController.navigate(Screens.Details.route + "/${list.id}")
+                        Toast
+                            .makeText(context, "${list.id}", Toast.LENGTH_SHORT)
+                            .show()
+                    },
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
@@ -76,20 +80,10 @@ fun CardItemList(list: CurrentList, navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f)
-                    .clickable { },
+                    .clickable {},
                 painter = painterResource(id = R.drawable.ic_delete),
                 contentDescription = "delete icon"
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewCardItem() {
-    CardItemList(
-        list =
-        CurrentList("22.22.22", "name", 1),
-        navController = rememberNavController()
-    )
 }
