@@ -18,14 +18,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DialogAddNewItemToShoppingList(
     dialogState: MutableState<Boolean>,
-    addNewItem: (String) -> Unit,
-    addCount: (Int) -> Unit
+    addNewItem: (String, String) -> Unit,
 ) {
     val newItem = remember {
         mutableStateOf("")
     }
     val countItem = remember {
-        mutableStateOf(0)
+        mutableStateOf("")
     }
     AlertDialog(
         onDismissRequest = {
@@ -33,8 +32,7 @@ fun DialogAddNewItemToShoppingList(
         },
         confirmButton = {
             TextButton(onClick = {
-                addNewItem(newItem.value)
-                addCount(countItem.value)
+                addNewItem(newItem.value, countItem.value)
                 dialogState.value = false
             }
             ) {
@@ -42,7 +40,8 @@ fun DialogAddNewItemToShoppingList(
             }
         },
         dismissButton = {
-            TextButton(onClick = { dialogState.value = false }) {
+            TextButton(onClick = { dialogState.value = false }
+            ) {
                 Text(text = "Cancel")
             }
         },
@@ -57,9 +56,9 @@ fun DialogAddNewItemToShoppingList(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Введите количество товара:")
                 TextField(
-                    value = countItem.value.toString(),
+                    value = countItem.value,
                     onValueChange = {
-                        countItem.value = it.toInt()
+                        countItem.value = it
                     })
             }
         }
