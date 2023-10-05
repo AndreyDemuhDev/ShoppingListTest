@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pidzama.shoppinlisttest.data.ShoppingRepository
 import com.pidzama.shoppinlisttest.data.network.AddElement
+import com.pidzama.shoppinlisttest.data.network.Elements
+import com.pidzama.shoppinlisttest.data.network.RemoveList
+import com.pidzama.shoppinlisttest.data.network.ShoppingList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,9 +18,17 @@ class DetailsViewModel @Inject constructor(
     private val shoppingRepository: ShoppingRepository
 ): ViewModel() {
 
+    private val _getCurrentShoppingList = MutableLiveData<List<Elements>>()
+    val getCurrentShoppingList: LiveData<List<Elements>>
+        get() = _getCurrentShoppingList
+
     private val _addItemToList = MutableLiveData<AddElement>()
     val addItemToList: LiveData<AddElement>
     get() = _addItemToList
+
+    private val _removeList = MutableLiveData<RemoveList>()
+    val removeList: LiveData<RemoveList>
+        get() = _removeList
 
     fun addItemToList(id: String, value: String, count: String){
         viewModelScope.launch {
@@ -25,6 +36,30 @@ class DetailsViewModel @Inject constructor(
                 if (it.isSuccessful){
                     _addItemToList.postValue(it.body())
                 } else{
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun getCurrentShoppingList(id: String) {
+        viewModelScope.launch {
+            shoppingRepository.getShoppingList(id).let {
+                if (it.isSuccessful) {
+                    _getCurrentShoppingList.postValue(it.body()?.lists)
+                } else {
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun removeList(id: String) {
+        viewModelScope.launch {
+            shoppingRepository.removeShoppingList(id).let {
+                if (it.isSuccessful) {
+                    _removeList.postValue(it.body())
+                } else {
                     it.errorBody()
                 }
             }

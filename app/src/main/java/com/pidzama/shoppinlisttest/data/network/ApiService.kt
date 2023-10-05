@@ -21,12 +21,12 @@ interface ApiService {
     ): Response<ShoppingListResponse>
 
     @GET("GetShoppingList?") //получить конкретный список
-    suspend fun getShoppingList(@Query("list_id") id: String): Response<Elements>
+    suspend fun getShoppingList(@Query("list_id") id: String): Response<ShoppingList>
 
-    @POST("RemoveShoppingList?")
+    @POST("RemoveShoppingList?") //удалить список покупок
     suspend fun removeShoppingList(@Query("list_id") id: String): Response<RemoveList>
 
-    @POST("AddToShoppingList?")
+    @POST("AddToShoppingList?") //добавить элемент в список покупок
     suspend fun addItemToShoppingList(
         @Query("id") id: String,
         @Query("value") value: String,

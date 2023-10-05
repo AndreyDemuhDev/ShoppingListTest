@@ -29,6 +29,7 @@ fun HomeScreen(navController: NavHostController) {
     val allShoppingLists = viewModel.getAllShoppingLists.observeAsState(listOf()).value
     val dialogState = remember { mutableStateOf(false) }
     viewModel.getAllShoppingLists(getKey.value)
+    viewModel.createNewShoppingList.observeAsState().value
     viewModel.getAllShoppingLists.observeAsState(listOf()).value
     if (dialogState.value) {
         DialogAddNameList(dialogState, onSaveNameList = {
@@ -36,26 +37,21 @@ fun HomeScreen(navController: NavHostController) {
         })
     }
 
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Scaffold(floatingActionButton = {
-            ButtonAddNewList { dialogState.value = true }
-        }) {
-            Column(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 14.dp),
-            ) {
-                Text(
-                    text = "Списки пользователя ${getKey.value}",
-                    textAlign = TextAlign.Center,
-                    fontSize = 24.sp,
-                    fontStyle = FontStyle.Italic
-                )
-                LazyColumn {
-                    items(allShoppingLists) { item ->
-                        CardItemList(list = item, navController = navController)
-                    }
+    Scaffold(floatingActionButton = {
+        ButtonAddNewList { dialogState.value = true }
+    }) {
+        Column(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 14.dp),
+        ) {
+            Text(
+                text = "Списки пользователя ${getKey.value}",
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                fontStyle = FontStyle.Italic
+            )
+            LazyColumn {
+                items(allShoppingLists) { item ->
+                    CardItemList(list = item, navController = navController)
                 }
             }
         }

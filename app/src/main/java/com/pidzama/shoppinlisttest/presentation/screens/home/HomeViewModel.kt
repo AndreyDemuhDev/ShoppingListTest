@@ -26,15 +26,6 @@ class HomeViewModel @Inject constructor(
     val getAllShoppingLists: MutableLiveData<List<CurrentList>>
         get() = _getAllShoppingLists
 
-    private val _getCurrentShoppingList = MutableLiveData<Elements>()
-    val getCurrentShoppingList: LiveData<Elements>
-        get() = _getCurrentShoppingList
-
-    private val _removeList = MutableLiveData<RemoveList>()
-    val removeList: LiveData<RemoveList>
-        get() = _removeList
-
-
     fun getAllShoppingLists(key: String) {
         viewModelScope.launch {
             shoppingRepository.getAllMyShopLists(key).let {
@@ -52,30 +43,6 @@ class HomeViewModel @Inject constructor(
             shoppingRepository.createNewShoppingList(key, name).let {
                 if (it.isSuccessful) {
                     _createNewShoppingList.postValue(it.body())
-                } else {
-                    it.errorBody()
-                }
-            }
-        }
-    }
-
-    fun getCurrentShoppingList(id: String) {
-        viewModelScope.launch {
-            shoppingRepository.getShoppingList(id).let {
-                if (it.isSuccessful) {
-                    _getCurrentShoppingList.postValue(it.body())
-                } else {
-                    it.errorBody()
-                }
-            }
-        }
-    }
-
-    fun removeList(id: String) {
-        viewModelScope.launch {
-            shoppingRepository.removeShoppingList(id).let {
-                if (it.isSuccessful) {
-                    _removeList.postValue(it.body())
                 } else {
                     it.errorBody()
                 }
