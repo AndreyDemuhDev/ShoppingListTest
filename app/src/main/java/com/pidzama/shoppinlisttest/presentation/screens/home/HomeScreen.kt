@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.pidzama.shoppinlisttest.data.DataStoreRepository
 import androidx.compose.foundation.lazy.items
+import com.pidzama.shoppinlisttest.data.repository.DataStoreRepository
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardItemList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNameList
@@ -57,4 +57,3 @@ fun HomeScreen(navController: NavHostController) {
         }
     }
 }
-

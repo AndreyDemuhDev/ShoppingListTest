@@ -2,7 +2,7 @@ package com.pidzama.shoppinlisttest.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.pidzama.shoppinlisttest.data.ShoppingRepository
+import com.pidzama.shoppinlisttest.data.repository.ShoppingRepository
 import com.pidzama.shoppinlisttest.data.network.ApiService
 import com.pidzama.shoppinlisttest.utils.Constants.Companion.BASE_URL
 import dagger.Module

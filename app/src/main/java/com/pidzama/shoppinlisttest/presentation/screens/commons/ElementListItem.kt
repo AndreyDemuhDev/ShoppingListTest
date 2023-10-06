@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.pidzama.shoppinlisttest.R
-import com.pidzama.shoppinlisttest.data.network.Elements
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

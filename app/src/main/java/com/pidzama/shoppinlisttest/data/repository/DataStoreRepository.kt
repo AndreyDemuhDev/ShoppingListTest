@@ -1,19 +1,17 @@
-package com.pidzama.shoppinlisttest.data
+package com.pidzama.shoppinlisttest.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
-import com.pidzama.shoppinlisttest.data.DataStoreRepository.PreferencesKey.authSuccess
+import com.pidzama.shoppinlisttest.data.repository.DataStoreRepository.PreferencesKey.authSuccess
 import com.pidzama.shoppinlisttest.utils.Constants.Companion.AUTHENTICATION_COMPLETED
 import com.pidzama.shoppinlisttest.utils.Constants.Companion.AUTH_KEY
 import com.pidzama.shoppinlisttest.utils.Constants.Companion.DATA_STORE_NAME
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
-import javax.inject.Singleton
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(DATA_STORE_NAME)
 

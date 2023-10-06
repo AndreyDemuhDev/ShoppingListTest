@@ -1,7 +1,6 @@
-package com.pidzama.shoppinlisttest.data
+package com.pidzama.shoppinlisttest.data.repository
 
 import com.pidzama.shoppinlisttest.data.network.ApiService
-import com.pidzama.shoppinlisttest.data.network.ShoppingListRequest
 import javax.inject.Inject
 
 class ShoppingRepository @Inject constructor(
