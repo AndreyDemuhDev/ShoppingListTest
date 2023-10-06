@@ -1,7 +1,7 @@
 package com.pidzama.shoppinlisttest.di
 
 import android.content.Context
-import com.pidzama.shoppinlisttest.data.DataStoreRepository
+import com.pidzama.shoppinlisttest.data.repository.DataStoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

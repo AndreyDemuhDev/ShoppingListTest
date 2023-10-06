@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pidzama.shoppinlisttest.data.DataStoreRepository
+import com.pidzama.shoppinlisttest.data.repository.DataStoreRepository
 import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pidzama.shoppinlisttest.data.ShoppingRepository
+import com.pidzama.shoppinlisttest.data.repository.ShoppingRepository
 import com.pidzama.shoppinlisttest.data.network.AddElement
 import com.pidzama.shoppinlisttest.data.network.Elements
 import com.pidzama.shoppinlisttest.data.network.RemoveList
-import com.pidzama.shoppinlisttest.data.network.ShoppingList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
