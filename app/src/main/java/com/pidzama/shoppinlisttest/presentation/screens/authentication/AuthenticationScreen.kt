@@ -1,6 +1,5 @@
 package com.pidzama.shoppinlisttest.presentation.screens.authentication
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -44,7 +43,6 @@ fun AuthenticationScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Log.d("MyLog", "отображение ключа2 ${key.value}")
             Text(
                 text = key.value,
                 fontSize = 36.sp,
@@ -56,7 +54,6 @@ fun AuthenticationScreen(navController: NavHostController) {
                     color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
                 ),
                 onClick = {
-                    Log.d("MyLog", "Кликнул, что бы получить ключь ${screenKey.toString()}")
                     key.value = screenKey.toString()
                 }) {
                 Text(
@@ -72,7 +69,7 @@ fun AuthenticationScreen(navController: NavHostController) {
                 singleLine = true,
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Введите ключ аунтефикации") },
+                label = {Text(text = "Введите ключ аунтефикации") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
@@ -91,7 +88,6 @@ fun AuthenticationScreen(navController: NavHostController) {
                             dataStoreRepository.saveAuthKey(authentication.value)
                         }
                         viewModel.authenticationState(completed = true)
-//                        viewModel.getAllShoppingLists(authentication.value)
                         navController.navigate(Screens.Home.route)
                         Toast.makeText(
                             context,
