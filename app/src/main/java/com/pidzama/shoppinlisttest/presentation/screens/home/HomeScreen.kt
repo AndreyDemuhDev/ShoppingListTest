@@ -1,5 +1,7 @@
 package com.pidzama.shoppinlisttest.presentation.screens.home
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
@@ -14,11 +16,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.painterResource
+import com.pidzama.shoppinlisttest.R
 import com.pidzama.shoppinlisttest.data.repository.DataStoreRepository
+import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardItemList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNameList
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
@@ -43,12 +50,23 @@ fun HomeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 14.dp),
         ) {
-            Text(
-                text = "Списки пользователя ${getKey.value}",
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp,
-                fontStyle = FontStyle.Italic
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Все списки:",
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp,
+                    fontStyle = FontStyle.Italic
+                )
+                Icon(
+                    painter = painterResource(R.drawable.ic_exit_app),
+                    contentDescription = "exit app icon",
+                    modifier = Modifier.clickable { navController.navigate(Screens.Authentication.route)}
+                )
+            }
             LazyColumn {
                 items(allShoppingLists) { item ->
                     CardItemList(list = item, navController = navController)
