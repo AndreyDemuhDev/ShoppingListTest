@@ -25,8 +25,7 @@ fun CardItemList(list: CurrentList, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(3.dp)
-            .height(60.dp),
+            .padding(3.dp),
         border = BorderStroke(2.dp, color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray),
         shape = MaterialTheme.shapes.medium
     ) {

@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import com.pidzama.shoppinlisttest.R
@@ -48,7 +50,8 @@ fun HomeScreen(navController: NavHostController) {
         ButtonAddNewList { dialogState.value = true }
     }) {
         Column(
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 14.dp),
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 14.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

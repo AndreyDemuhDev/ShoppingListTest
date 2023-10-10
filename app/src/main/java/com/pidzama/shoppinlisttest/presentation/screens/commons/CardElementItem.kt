@@ -21,8 +21,7 @@ fun CardElementItem(element: Elements) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(3.dp)
-            .height(60.dp),
+            .padding(3.dp),
         border = BorderStroke(
             2.dp,
             color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
@@ -41,8 +40,9 @@ fun CardElementItem(element: Elements) {
             ) {
                 Row {
                     Text(
-                        text = "Наименование товара: ",
+                        text = "Товар: ",
                         fontWeight = FontWeight.Bold,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = element.name.toString(),

@@ -30,7 +30,8 @@ fun DetailsScreen(id: String, navController: NavHostController) {
     val viewModel = hiltViewModel<DetailsViewModel>()
     val dialogDeleteState = remember { mutableStateOf(false) }
     val dialogAddNewItemState = remember { mutableStateOf(false) }
-    val currentList = viewModel.getCurrentShoppingList.observeAsState(listOf()).value
+    val allElementsCurrentList = viewModel.getCurrentShoppingList.observeAsState(listOf()).value
+    val currentList = viewModel.getCurrentShoppingList.observeAsState().value
     val currentItems = viewModel.addItemToList.observeAsState().value
     val removeItem = viewModel.removeList.observeAsState().value
     viewModel.getCurrentShoppingList(id)
@@ -50,35 +51,37 @@ fun DetailsScreen(id: String, navController: NavHostController) {
             })
     }
 
-    Row {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(horizontalArrangement = Arrangement.SpaceAround) {
-                Text(
-                    modifier = Modifier
-                        .weight(9f)
-                        .padding(horizontal = 10.dp),
-                    text = "Список покупок: \n$id",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Icon(
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(40.dp)
-                        .clickable { dialogDeleteState.value = true },
-                    painter = painterResource(id = R.drawable.ic_delete),
-                    contentDescription = "delete icon"
-                )
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(horizontalArrangement = Arrangement.SpaceAround) {
+            Text(
+                modifier = Modifier
+                    .weight(9f)
+                    .padding(horizontal = 10.dp),
+                text = "Список покупок: \n${currentList?.firstOrNull()?.name}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                overflow = TextOverflow.Ellipsis
+            )
+            Icon(
+                modifier = Modifier
+                    .weight(1f)
+                    .size(40.dp)
+                    .clickable { dialogDeleteState.value = true },
+                painter = painterResource(id = R.drawable.ic_delete),
+                contentDescription = "delete icon"
+            )
+        }
+        LazyColumn {
+            items(allElementsCurrentList) { element ->
+                CardElementItem(element = element)
             }
-            LazyColumn {
-                items(currentList) { element ->
-                    CardElementItem(element = element)
-                }
-            }
-            Button(onClick = { dialogAddNewItemState.value = true }) {
-                Text(text = "Добавить товар")
-            }
+        }
+        Button(onClick = { dialogAddNewItemState.value = true }) {
+            Text(text = "Добавить товар")
         }
     }
 }
