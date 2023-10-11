@@ -33,6 +33,11 @@ interface ApiService {
         @Query("n") n: String
     ): Response<AddElement>
 
+    @POST("CrossItOff?") //добавить элемент в список покупок
+    suspend fun crossItOff(
+        @Query("id") id: String,
+    ): Response<Elements>
+
 
 //    @POST("/RemoveShoppingList?&list_id=290")
 //    suspend fun postDeleteShoppingList(@Body body: KeyResponse): Response<CreateListResponse>
