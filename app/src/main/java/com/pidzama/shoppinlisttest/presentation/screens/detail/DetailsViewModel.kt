@@ -9,9 +9,6 @@ import com.pidzama.shoppinlisttest.data.network.AddElement
 import com.pidzama.shoppinlisttest.data.network.Elements
 import com.pidzama.shoppinlisttest.data.network.RemoveList
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +24,10 @@ class DetailsViewModel @Inject constructor(
     private val _addItemToList = MutableLiveData<AddElement>()
     val addItemToList: LiveData<AddElement>
     get() = _addItemToList
+
+    private val _crossedItOffItemToList = MutableLiveData<Elements>()
+    val crossedItOffItemToList: LiveData<Elements>
+        get() = _crossedItOffItemToList
 
     private val _removeList = MutableLiveData<RemoveList>()
     val removeList: LiveData<RemoveList>
@@ -49,6 +50,18 @@ class DetailsViewModel @Inject constructor(
             shoppingRepository.getShoppingList(id).let {
                 if (it.isSuccessful) {
                     _getCurrentShoppingList.postValue(it.body()?.lists)
+                } else {
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun crossedItOffItemFromList(id: String) {
+        viewModelScope.launch {
+            shoppingRepository.crossedItOff(id).let {
+                if (it.isSuccessful) {
+                    _crossedItOffItemToList.postValue(it.body())
                 } else {
                     it.errorBody()
                 }
