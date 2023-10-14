@@ -10,13 +10,6 @@ data class AuthResponse(
     val error: String? = null
 )
 
-data class ShoppingListRequest(
-    @SerializedName("key")
-    var key: String,
-    @SerializedName("name")
-    var name: String
-)
-
 data class ShoppingListResponse(
     @SerializedName("key")
     var success: Boolean,
@@ -64,10 +57,17 @@ data class RemoveList(
     @SerializedName("new_value")
     val delete: Boolean
 )
-
+//возвращаем такой ответ при добавлении элемента в список покупок
 data class AddElement(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("item_id")
     val itemId: Int
+)
+//возвращает такой ответ при "вычеркинвании" элемента из списка покупок
+data class DeleteElements(
+    @SerializedName("success")
+    val success: Boolean,
+    @SerializedName("rows_affected")
+    val rowsAffected: Int
 )

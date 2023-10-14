@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,7 +36,12 @@ fun CardElementItem(element: Elements) {
             .padding(3.dp),
         border = BorderStroke(
             2.dp,
-            color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
+            color = when {
+                isSystemInDarkTheme() && checked.value ||
+                        !isSystemInDarkTheme() && checked.value -> Color.Red
+                isSystemInDarkTheme() -> Color.White
+                else -> Color.DarkGray
+            }
         ),
         shape = MaterialTheme.shapes.medium
     ) {
@@ -58,7 +64,10 @@ fun CardElementItem(element: Elements) {
                     Text(
                         text = element.name.toString(),
                         fontFamily = FontFamily.Monospace,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        textDecoration = if (checked.value) {
+                            TextDecoration.LineThrough
+                        } else TextDecoration.None
                     )
                 }
                 Row {
@@ -69,24 +78,16 @@ fun CardElementItem(element: Elements) {
                     Text(
                         text = element.created.toString(),
                         fontFamily = FontFamily.Monospace,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
-
-//            Image(
-//                modifier = Modifier
-//                    .weight(1f)
-//                    .padding(all = 2.dp)
-//                    .clickable {
-//                        viewModel.crossedItOffItemFromList(element.id.toString())
-//                    },
-//                painter = painterResource(id = R.drawable.ic_check), contentDescription = null,
-//                colorFilter = ColorFilter.tint(color = if (isSystemInDarkTheme()) Color.White else Color.Black)
-//            )
             Checkbox(
                 checked = checked.value,
-                onCheckedChange = { viewModel.crossedItOffItemFromList(element.id.toString()) },
+                onCheckedChange = {
+                    checked.value = it
+//                  viewModel.crossedItOffItemFromList(element.id.toString())
+                },
                 modifier = Modifier.padding(5.dp),
                 colors = if (isSystemInDarkTheme()) CheckboxDefaults.colors(Color.White) else CheckboxDefaults.colors(
                     Color.Black

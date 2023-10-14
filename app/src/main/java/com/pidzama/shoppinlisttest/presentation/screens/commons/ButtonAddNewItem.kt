@@ -12,6 +12,6 @@ fun ButtonAddNewList(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         onClick = { onClick() },
         icon = { Icon(Icons.Filled.Add, "icon button") },
-        text = { Text(text = "Add list") }
+        text = { Text(text = "Add new") }
     )
 }
