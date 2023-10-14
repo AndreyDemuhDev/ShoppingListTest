@@ -6,16 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pidzama.shoppinlisttest.data.repository.ShoppingRepository
 import com.pidzama.shoppinlisttest.data.network.AddElement
+import com.pidzama.shoppinlisttest.data.network.DeleteElements
 import com.pidzama.shoppinlisttest.data.network.Elements
 import com.pidzama.shoppinlisttest.data.network.RemoveList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val shoppingRepository: ShoppingRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _getCurrentShoppingList = MutableLiveData<List<Elements>>()
     val getCurrentShoppingList: LiveData<List<Elements>>
@@ -23,22 +28,22 @@ class DetailsViewModel @Inject constructor(
 
     private val _addItemToList = MutableLiveData<AddElement>()
     val addItemToList: LiveData<AddElement>
-    get() = _addItemToList
+        get() = _addItemToList
 
-    private val _crossedItOffItemToList = MutableLiveData<Elements>()
-    val crossedItOffItemToList: LiveData<Elements>
+    private val _crossedItOffItemToList = MutableLiveData<DeleteElements>()
+    val crossedItOffItemToList: LiveData<DeleteElements>
         get() = _crossedItOffItemToList
 
     private val _removeList = MutableLiveData<RemoveList>()
     val removeList: LiveData<RemoveList>
         get() = _removeList
 
-    fun addItemToList(id: String, value: String, count: String){
+    fun addItemToList(id: String, value: String, count: String) {
         viewModelScope.launch {
-            shoppingRepository.addItemToShoppingList(id, value, count).let{
-                if (it.isSuccessful){
+            shoppingRepository.addItemToShoppingList(id, value, count).let {
+                if (it.isSuccessful) {
                     _addItemToList.postValue(it.body())
-                } else{
+                } else {
                     it.errorBody()
                 }
             }

@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pidzama.shoppinlisttest.R
 import com.pidzama.shoppinlisttest.presentation.navigation.Screens
+import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardElementItem
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNewItemToShoppingList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogDeleteList
@@ -52,8 +53,9 @@ fun DetailsScreen(id: String, navController: NavHostController) {
             })
     }
 
-    Scaffold {
-
+    Scaffold(floatingActionButton = {
+        ButtonAddNewList { dialogAddNewItemState.value = true }
+    }) {
         Column(
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 14.dp),
@@ -82,9 +84,6 @@ fun DetailsScreen(id: String, navController: NavHostController) {
                 items(allElementsCurrentList) { element ->
                     CardElementItem(element = element)
                 }
-            }
-            Button(onClick = { dialogAddNewItemState.value = true }) {
-                Text(text = "Добавить товар")
             }
         }
     }
