@@ -1,5 +1,6 @@
 package com.pidzama.shoppinlisttest.presentation.screens.commons
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -25,15 +27,21 @@ import com.pidzama.shoppinlisttest.data.network.Elements
 import com.pidzama.shoppinlisttest.presentation.screens.detail.DetailsViewModel
 
 @Composable
-fun CardElementItem(element: Elements) {
+fun CardElementItem(element: Elements, listId: String) {
 
     val viewModel = hiltViewModel<DetailsViewModel>()
     val checked = remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(3.dp),
+            .padding(3.dp)
+            .clickable {
+                Toast
+                    .makeText(context, "${element.id}", Toast.LENGTH_SHORT)
+                    .show()
+            },
         border = BorderStroke(
             2.dp,
             color = when {
@@ -52,7 +60,7 @@ fun CardElementItem(element: Elements) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = 5.dp)
-                    .weight(9f),
+                    .weight(10f),
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
@@ -86,12 +94,21 @@ fun CardElementItem(element: Elements) {
                 checked = checked.value,
                 onCheckedChange = {
                     checked.value = it
-//                  viewModel.crossedItOffItemFromList(element.id.toString())
+                    viewModel.crossedItOffItemFromList(element.id.toString())
                 },
-                modifier = Modifier.padding(5.dp),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f),
                 colors = if (isSystemInDarkTheme()) CheckboxDefaults.colors(Color.White) else CheckboxDefaults.colors(
                     Color.Black
                 )
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_delete),
+                contentDescription = "delete icon",
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { viewModel.removeItemFromList(listId, element.id.toString()) }
             )
         }
     }

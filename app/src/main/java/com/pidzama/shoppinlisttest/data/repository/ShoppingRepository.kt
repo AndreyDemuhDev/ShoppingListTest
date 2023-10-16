@@ -23,4 +23,7 @@ class ShoppingRepository @Inject constructor(
         apiService.addItemToShoppingList(id = id, value = value, n = n)
 
     suspend fun crossedItOff(id: String) = apiService.crossItOff(id = id)
+
+    suspend fun removeItemFromList(listId: String, itemId: String) =
+        apiService.removeFromList(listId = listId, itemId = itemId)
 }

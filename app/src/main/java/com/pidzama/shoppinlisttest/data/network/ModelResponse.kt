@@ -65,9 +65,14 @@ data class AddElement(
     val itemId: Int
 )
 //возвращает такой ответ при "вычеркинвании" элемента из списка покупок
-data class DeleteElements(
+data class CrossedElement(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("rows_affected")
     val rowsAffected: Int
+)
+//возвращает такой ответ при удалении элемента из списка покупок
+data class DeleteElement(
+    @SerializedName("success")
+    val success: Boolean
 )
