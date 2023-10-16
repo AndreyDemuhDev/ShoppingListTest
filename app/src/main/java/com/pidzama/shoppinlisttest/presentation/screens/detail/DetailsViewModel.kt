@@ -4,16 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pidzama.shoppinlisttest.data.network.*
 import com.pidzama.shoppinlisttest.data.repository.ShoppingRepository
-import com.pidzama.shoppinlisttest.data.network.AddElement
-import com.pidzama.shoppinlisttest.data.network.DeleteElements
-import com.pidzama.shoppinlisttest.data.network.Elements
-import com.pidzama.shoppinlisttest.data.network.RemoveList
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,13 +23,17 @@ class DetailsViewModel @Inject constructor(
     val addItemToList: LiveData<AddElement>
         get() = _addItemToList
 
-    private val _crossedItOffItemToList = MutableLiveData<DeleteElements>()
-    val crossedItOffItemToList: LiveData<DeleteElements>
+    private val _crossedItOffItemToList = MutableLiveData<CrossedElement>()
+    val crossedItOffItemToList: LiveData<CrossedElement>
         get() = _crossedItOffItemToList
 
     private val _removeList = MutableLiveData<RemoveList>()
     val removeList: LiveData<RemoveList>
         get() = _removeList
+
+    private val _removeItemFromList = MutableLiveData<DeleteElement>()
+    val removeItemFromList: LiveData<DeleteElement>
+        get() = _removeItemFromList
 
     fun addItemToList(id: String, value: String, count: String) {
         viewModelScope.launch {
@@ -79,6 +76,18 @@ class DetailsViewModel @Inject constructor(
             shoppingRepository.removeShoppingList(id).let {
                 if (it.isSuccessful) {
                     _removeList.postValue(it.body())
+                } else {
+                    it.errorBody()
+                }
+            }
+        }
+    }
+
+    fun removeItemFromList(listId: String, itemId: String) {
+        viewModelScope.launch {
+            shoppingRepository.removeItemFromList(listId, itemId).let {
+                if (it.isSuccessful) {
+                    _removeItemFromList.postValue(it.body())
                 } else {
                     it.errorBody()
                 }

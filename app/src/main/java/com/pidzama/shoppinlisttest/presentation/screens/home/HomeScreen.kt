@@ -40,6 +40,7 @@ fun HomeScreen(navController: NavHostController) {
     viewModel.getAllShoppingLists(getKey.value)
     viewModel.createNewShoppingList.observeAsState().value
     viewModel.getAllShoppingLists.observeAsState(listOf()).value
+
     if (dialogState.value) {
         DialogAddNameList(dialogState, onSaveNameList = {
             viewModel.createNewShoppingList(key = getKey.value, name = it)

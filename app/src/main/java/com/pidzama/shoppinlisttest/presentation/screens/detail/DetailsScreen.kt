@@ -34,10 +34,12 @@ fun DetailsScreen(id: String, navController: NavHostController) {
     val dialogDeleteState = remember { mutableStateOf(false) }
     val dialogAddNewItemState = remember { mutableStateOf(false) }
     val allElementsCurrentList = viewModel.getCurrentShoppingList.observeAsState(listOf()).value
+    val removeItemFromList = viewModel.removeItemFromList.observeAsState().value
     viewModel.addItemToList.observeAsState().value
     viewModel.removeList.observeAsState().value
     viewModel.crossedItOffItemToList.observeAsState().value
     viewModel.getCurrentShoppingList(id)
+
 
     if (dialogDeleteState.value) {
         DialogDeleteList(dialogDeleteState, onClickDelete = {
@@ -82,7 +84,7 @@ fun DetailsScreen(id: String, navController: NavHostController) {
             }
             LazyColumn {
                 items(allElementsCurrentList) { element ->
-                    CardElementItem(element = element)
+                    CardElementItem(element = element, listId = id)
                 }
             }
         }
