@@ -47,6 +47,8 @@ data class Elements(
     val created: String? = null,
     @SerializedName("name")
     val name: String? = null,
+    @SerializedName("is_crossed")
+    val isCrossed: Boolean,
     @SerializedName("id")
     val id: Int? = null,
 )

@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Все списки:",
+                    text = "Все списки: ${getKey.value}",
                     textAlign = TextAlign.Center,
                     fontSize = 24.sp,
                     fontStyle = FontStyle.Italic

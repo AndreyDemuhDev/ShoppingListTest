@@ -40,13 +40,13 @@ fun DetailsScreen(id: String, navController: NavHostController) {
     viewModel.crossedItOffItemToList.observeAsState().value
     viewModel.getCurrentShoppingList(id)
 
-
     if (dialogDeleteState.value) {
         DialogDeleteList(dialogDeleteState, onClickDelete = {
             viewModel.removeList(id)
             navController.navigate(Screens.Home.route)
         })
     }
+
     if (dialogAddNewItemState.value) {
         DialogAddNewItemToShoppingList(
             dialogAddNewItemState,
@@ -82,7 +82,7 @@ fun DetailsScreen(id: String, navController: NavHostController) {
                     contentDescription = "delete icon"
                 )
             }
-            LazyColumn {
+            LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
                 items(allElementsCurrentList) { element ->
                     CardElementItem(element = element, listId = id)
                 }
