@@ -39,14 +39,14 @@ fun CardElementItem(element: Elements, listId: String) {
             .padding(3.dp)
             .clickable {
                 Toast
-                    .makeText(context, "${element.id}", Toast.LENGTH_SHORT)
+                    .makeText(context, "${element.id} + ${element.isCrossed}", Toast.LENGTH_SHORT)
                     .show()
             },
         border = BorderStroke(
             2.dp,
             color = when {
-                isSystemInDarkTheme() && checked.value ||
-                        !isSystemInDarkTheme() && checked.value -> Color.Red
+                isSystemInDarkTheme() && element.isCrossed ||
+                        !isSystemInDarkTheme() && element.isCrossed -> Color.Red
                 isSystemInDarkTheme() -> Color.White
                 else -> Color.DarkGray
             }
@@ -73,7 +73,7 @@ fun CardElementItem(element: Elements, listId: String) {
                         text = element.name.toString(),
                         fontFamily = FontFamily.Monospace,
                         overflow = TextOverflow.Ellipsis,
-                        textDecoration = if (checked.value) {
+                        textDecoration = if (element.isCrossed) {
                             TextDecoration.LineThrough
                         } else TextDecoration.None
                     )
@@ -91,7 +91,7 @@ fun CardElementItem(element: Elements, listId: String) {
                 }
             }
             Checkbox(
-                checked = checked.value,
+                checked = if (element.isCrossed) !checked.value else checked.value,
                 onCheckedChange = {
                     checked.value = it
                     viewModel.crossedItOffItemFromList(element.id.toString())
