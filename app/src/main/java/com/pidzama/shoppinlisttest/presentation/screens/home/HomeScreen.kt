@@ -26,12 +26,14 @@ import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardItemList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.DialogAddNameList
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val viewModel = hiltViewModel<HomeViewModel>()
     val dataStoreRepository = DataStoreRepository(context)
     val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
@@ -68,7 +70,12 @@ fun HomeScreen(navController: NavHostController) {
                 Icon(
                     painter = painterResource(R.drawable.ic_exit_app),
                     contentDescription = "exit app icon",
-                    modifier = Modifier.clickable { navController.navigate(Screens.Authentication.route)}
+                    modifier = Modifier.clickable {
+                        navController.navigate(Screens.Authentication.route)
+                        scope.launch {
+                            dataStoreRepository.deleteKey()
+                        }
+                    }
                 )
             }
             LazyColumn {

@@ -1,6 +1,7 @@
 package com.pidzama.shoppinlisttest.presentation.screens.detail
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pidzama.shoppinlisttest.R
+import com.pidzama.shoppinlisttest.data.network.Elements
 import com.pidzama.shoppinlisttest.presentation.navigation.Screens
 import com.pidzama.shoppinlisttest.presentation.screens.commons.ButtonAddNewList
 import com.pidzama.shoppinlisttest.presentation.screens.commons.CardElementItem
@@ -34,7 +37,7 @@ fun DetailsScreen(id: String, navController: NavHostController) {
     val dialogDeleteState = remember { mutableStateOf(false) }
     val dialogAddNewItemState = remember { mutableStateOf(false) }
     val allElementsCurrentList = viewModel.getCurrentShoppingList.observeAsState(listOf()).value
-    val removeItemFromList = viewModel.removeItemFromList.observeAsState().value
+    viewModel.removeItemFromList.observeAsState().value
     viewModel.addItemToList.observeAsState().value
     viewModel.removeList.observeAsState().value
     viewModel.crossedItOffItemToList.observeAsState().value
@@ -60,14 +63,13 @@ fun DetailsScreen(id: String, navController: NavHostController) {
     }) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 14.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 10.dp, vertical = 14.dp)
         ) {
             Row(horizontalArrangement = Arrangement.SpaceAround) {
                 Text(
                     modifier = Modifier
                         .weight(9f)
-                        .padding(horizontal = 10.dp),
+                        .padding(horizontal = 2.dp),
                     text = "Список покупок: \n$id",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
@@ -82,11 +84,30 @@ fun DetailsScreen(id: String, navController: NavHostController) {
                     contentDescription = "delete icon"
                 )
             }
-            LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 2.dp),
+                text = "Всего элементов: ${allElementsCurrentList.count()}, " +
+                        "вычеркнуто: ${countCrossedElements(allElementsCurrentList).count()} ",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                overflow = TextOverflow.Ellipsis
+            )
+            LazyColumn(modifier = Modifier.padding(bottom = 60.dp, start = 1.dp, end = 8.dp)) {
                 items(allElementsCurrentList) { element ->
                     CardElementItem(element = element, listId = id)
                 }
             }
         }
     }
+}
+
+fun countCrossedElements(items: List<Elements>): List<Elements> {
+    val listCrossedElements = mutableListOf<Elements>()
+    items.forEach {
+        if (it.isCrossed) {
+            listCrossedElements.add(it)
+        }
+    }
+    return listCrossedElements
 }

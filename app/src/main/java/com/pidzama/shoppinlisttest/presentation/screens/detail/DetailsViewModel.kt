@@ -23,16 +23,16 @@ class DetailsViewModel @Inject constructor(
     val addItemToList: LiveData<AddElement>
         get() = _addItemToList
 
-    private val _crossedItOffItemToList = MutableLiveData<CrossedElement>()
-    val crossedItOffItemToList: LiveData<CrossedElement>
+    private val _crossedItOffItemToList = MutableLiveData<Elements>()
+    val crossedItOffItemToList: LiveData<Elements>
         get() = _crossedItOffItemToList
 
     private val _removeList = MutableLiveData<RemoveList>()
     val removeList: LiveData<RemoveList>
         get() = _removeList
 
-    private val _removeItemFromList = MutableLiveData<DeleteElement>()
-    val removeItemFromList: LiveData<DeleteElement>
+    private val _removeItemFromList = MutableLiveData<Elements>()
+    val removeItemFromList: LiveData<Elements>
         get() = _removeItemFromList
 
     fun addItemToList(id: String, value: String, count: String) {

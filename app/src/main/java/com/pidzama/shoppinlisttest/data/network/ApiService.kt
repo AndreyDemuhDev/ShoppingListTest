@@ -33,15 +33,15 @@ interface ApiService {
         @Query("n") n: String
     ): Response<AddElement>
 
-    @POST("CrossItOff?") //удалить элемент из списка покупок
+    @POST("CrossItOff?") //вычеркнуть элемент из списка покупок
     suspend fun crossItOff(
         @Query("id") id: String,
-    ): Response<CrossedElement>
+    ): Response<Elements>
 
     @POST("RemoveFromList?") //удалить элемент из списка покупок
     suspend fun removeFromList(
         @Query("list_id") listId: String,
         @Query("item_id") itemId: String,
-    ): Response<DeleteElement>
+    ): Response<Elements>
 
 }

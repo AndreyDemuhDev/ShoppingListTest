@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,7 +37,7 @@ fun CardElementItem(element: Elements, listId: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(3.dp)
+            .padding(vertical = 2.dp)
             .clickable {
                 Toast
                     .makeText(context, "${element.id} + ${element.isCrossed}", Toast.LENGTH_SHORT)
@@ -108,7 +109,9 @@ fun CardElementItem(element: Elements, listId: String) {
                 contentDescription = "delete icon",
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { viewModel.removeItemFromList(listId, element.id.toString()) }
+                    .clickable {
+                        viewModel.removeItemFromList(listId, element.id.toString())
+                    }
             )
         }
     }

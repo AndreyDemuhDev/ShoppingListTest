@@ -48,11 +48,17 @@ class DataStoreRepository(context: Context) {
     suspend fun saveAuthKey(key: String) {
         dataStore.edit { pref ->
             pref[stringPreferencesKey(AUTH_KEY)] = key
-
         }
     }
 
     fun getKey() = dataStore.data.map { pref ->
         pref[stringPreferencesKey(AUTH_KEY)] ?: "0"
     }
+
+    suspend fun deleteKey() {
+        dataStore.edit { pref ->
+            pref[stringPreferencesKey(AUTH_KEY)] = ""
+        }
+    }
+
 }
