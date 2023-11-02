@@ -20,7 +20,7 @@ data class ShoppingListResponse(
 //перечень всех списков покупок по конкретному ключу
 data class ShoppingListsItem(
     @SerializedName("shop_list")
-    val lists: ArrayList<CurrentList> = arrayListOf(),
+    val lists: List<CurrentList> = listOf(),
     val success: Boolean? = null
 )
 
@@ -38,7 +38,7 @@ data class CurrentList(
 data class ShoppingList(
     val success: Boolean? = null,
     @SerializedName("item_list")
-    val lists: ArrayList<Elements> = arrayListOf()
+    val lists: List<Elements> = listOf()
 )
 
 //элементы списка покупок
@@ -65,16 +65,4 @@ data class AddElement(
     val success: Boolean,
     @SerializedName("item_id")
     val itemId: Int
-)
-//возвращает такой ответ при "вычеркинвании" элемента из списка покупок
-data class CrossedElement(
-    @SerializedName("success")
-    val success: Boolean,
-    @SerializedName("rows_affected")
-    val rowsAffected: Int
-)
-//возвращает такой ответ при удалении элемента из списка покупок
-data class DeleteElement(
-    @SerializedName("success")
-    val success: Boolean
 )
