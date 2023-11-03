@@ -71,7 +71,11 @@ fun HomeScreen(navController: NavHostController) {
                     painter = painterResource(R.drawable.ic_exit_app),
                     contentDescription = "exit app icon",
                     modifier = Modifier.clickable {
-                        navController.navigate(Screens.Authentication.route)
+                        navController.navigate(Screens.Authentication.route){
+                            popUpTo(navController.graph.id){
+                                inclusive = true
+                            }
+                        }
                         scope.launch {
                             dataStoreRepository.deleteKey()
                         }

@@ -65,12 +65,13 @@ fun DetailsScreen(id: String, navController: NavHostController) {
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 14.dp)
         ) {
-            Row(horizontalArrangement = Arrangement.SpaceAround) {
+            Row(horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier
                         .weight(9f)
                         .padding(horizontal = 2.dp),
-                    text = "Список покупок: \n$id",
+                    text = "Список покупок: $id",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     overflow = TextOverflow.Ellipsis

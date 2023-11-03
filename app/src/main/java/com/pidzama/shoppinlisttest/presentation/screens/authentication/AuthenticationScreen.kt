@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,14 +29,14 @@ fun AuthenticationScreen(navController: NavHostController) {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val viewModel = hiltViewModel<AuthViewModel>()
     val dataStoreRepository = DataStoreRepository(context)
     val getKey = dataStoreRepository.getKey().collectAsState(initial = "")
-    val viewModel = hiltViewModel<AuthViewModel>()
-    val authentication = remember { mutableStateOf("") }
-    val key = remember { mutableStateOf("______") }
-    viewModel.getAuthenticationKey()
-
-    val screenKey = viewModel.getKey.value
+    val screenKey = viewModel.getKey.observeAsState().value //значение ключа полученного с сервера
+    val authentication = remember { mutableStateOf("") } //значение введенное в поле аутентификации
+    val key = remember { mutableStateOf("______") } //поле отображает полученный ключ значение (screenKey)
+    viewModel.getAuthenticationKey() //запрос на сервер для получения ключа
+    viewModel.authentication(authentication.value) //авторизация по ключу
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -69,7 +70,7 @@ fun AuthenticationScreen(navController: NavHostController) {
                 singleLine = true,
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth(),
-                label = {Text(text = "Введите ключ аунтефикации") },
+                label = { Text(text = "Введите ключ аунтефикации") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
@@ -80,15 +81,19 @@ fun AuthenticationScreen(navController: NavHostController) {
                 text = getKey.value,
                 color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
             )
-            Button(enabled = authentication.value.length >= 6,
+            Button(
+                enabled = authentication.value.length >= 6,
                 onClick = {
-                    viewModel.authentication(authentication.value)
                     if (viewModel.key.value?.success == true) {
                         scope.launch {
                             dataStoreRepository.saveAuthKey(authentication.value)
                         }
                         viewModel.authenticationState(completed = true)
-                        navController.navigate(Screens.Home.route)
+                        navController.navigate(Screens.Home.route){
+                            popUpTo(navController.graph.id){
+                                inclusive = true
+                            }
+                        }
                         Toast.makeText(
                             context,
                             viewModel.key.value?.success.toString(),
@@ -103,7 +108,6 @@ fun AuthenticationScreen(navController: NavHostController) {
                         )
                             .show()
                     }
-
                 }) {
                 Text(
                     text = "Авторизоваться",
