@@ -57,7 +57,7 @@ class DataStoreRepository(context: Context) {
 
     suspend fun deleteKey() {
         dataStore.edit { pref ->
-            pref[stringPreferencesKey(AUTH_KEY)] = ""
+            pref[stringPreferencesKey(AUTH_KEY)] = "_"
         }
     }
 
